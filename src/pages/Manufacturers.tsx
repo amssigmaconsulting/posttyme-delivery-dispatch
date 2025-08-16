@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Factory, Globe, BarChart, Shield } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const ManufacturersPage = () => {
   return (
@@ -20,8 +21,8 @@ const ManufacturersPage = () => {
             Connect directly with retailers and distributors nationwide. 
             Scale your manufacturing business with our comprehensive distribution network.
           </p>
-          <Button size="lg" className="mr-4">
-            Join Our Network
+          <Button size="lg" className="mr-4" asChild>
+            <Link to="/join-network">Join Our Network</Link>
           </Button>
           <Button variant="outline" size="lg">
             See Success Stories
