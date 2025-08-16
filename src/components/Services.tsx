@@ -5,38 +5,38 @@ const Services = () => {
   const services = [
     {
       icon: Truck,
-      title: "Same-Day Delivery",
-      description: "Fast, reliable delivery service for urgent packages and documents within the city.",
+      title: "Bulk B2B Delivery",
+      description: "Efficient transportation of goods from manufacturers to retailers with specialized handling for bulk orders.",
       color: "text-primary"
     },
     {
       icon: Clock,
-      title: "Scheduled Delivery",
-      description: "Plan ahead with our scheduled delivery service for recurring or time-sensitive shipments.",
+      title: "Scheduled Restocking",
+      description: "Regular delivery schedules to keep retail inventory stocked with automated reorder systems.",
       color: "text-accent"
     },
     {
       icon: Shield,
-      title: "Secure Transport",
-      description: "End-to-end tracking and insurance coverage for valuable and sensitive deliveries.",
+      title: "Secure Chain",
+      description: "End-to-end supply chain security with insurance coverage and real-time tracking for valuable merchandise.",
       color: "text-primary"
     },
     {
       icon: BarChart3,
-      title: "Business Solutions",
-      description: "Customized delivery solutions for businesses with volume discounts and analytics.",
+      title: "Analytics Dashboard",
+      description: "Comprehensive insights for manufacturers and retailers with delivery analytics and inventory management.",
       color: "text-accent"
     },
     {
       icon: Users,
-      title: "Customer Support",
-      description: "24/7 customer support to help you track packages and resolve any issues quickly.",
+      title: "Partner Network",
+      description: "Dedicated support connecting verified manufacturers with trusted retailers across our network.",
       color: "text-primary"
     },
     {
       icon: MapPin,
-      title: "Wide Coverage",
-      description: "Extensive delivery network covering all major areas with real-time GPS tracking.",
+      title: "National Coverage",
+      description: "Extensive delivery network covering manufacturing hubs to retail locations nationwide.",
       color: "text-accent"
     }
   ];
@@ -49,7 +49,7 @@ const Services = () => {
             Our Services
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Comprehensive delivery solutions designed to meet all your shipping needs
+            Complete B2B logistics solutions connecting manufacturers with retailers efficiently
           </p>
         </div>
 

@@ -26,8 +26,8 @@ const Hero = () => {
           </h1>
           
           <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
-            PosTym connects businesses with reliable delivery partners for seamless, 
-            on-time deliveries across the city.
+            PosTym connects producers and manufacturers with retailers through reliable 
+            delivery partners for seamless B2B logistics.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">

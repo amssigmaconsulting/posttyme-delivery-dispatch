@@ -6,29 +6,29 @@ const HowItWorks = () => {
     {
       icon: Package,
       step: "01",
-      title: "Book Your Delivery",
-      description: "Enter pickup and delivery details through our easy-to-use platform or mobile app.",
+      title: "Manufacturer Lists Products",
+      description: "Producers upload product inventory with pricing and delivery requirements to our platform.",
       color: "bg-primary text-primary-foreground"
     },
     {
       icon: MapPin,
       step: "02", 
-      title: "Get Matched",
-      description: "Our AI system instantly matches you with the best available driver in your area.",
+      title: "Retailer Places Order",
+      description: "Retailers browse products and place bulk orders with specified delivery locations.",
       color: "bg-accent text-accent-foreground"
     },
     {
       icon: Truck,
       step: "03",
-      title: "Real-Time Tracking",
-      description: "Track your package in real-time with live GPS updates and delivery notifications.",
+      title: "Logistics Coordination",
+      description: "Our system matches orders with optimal delivery routes and trusted logistics partners.",
       color: "bg-primary text-primary-foreground"
     },
     {
       icon: CheckCircle,
       step: "04",
-      title: "Delivery Confirmed",
-      description: "Receive confirmation with photo proof and digital signature upon successful delivery.",
+      title: "Delivery & Confirmation",
+      description: "Goods delivered to retailer with digital confirmation and inventory update notifications.",
       color: "bg-accent text-accent-foreground"
     }
   ];
@@ -44,7 +44,7 @@ const HowItWorks = () => {
             Simple. Fast. Reliable.
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Get your packages delivered in just a few clicks with our streamlined process
+            Connecting manufacturers with retailers through our efficient B2B logistics platform
           </p>
         </div>
 
