@@ -66,7 +66,7 @@ const Footer = () => {
             {/* Brand Section */}
             <div className="lg:col-span-2">
               <div className="text-3xl font-bold mb-4 text-background">
-                PosaTym
+                PosTym
               </div>
               <p className="text-background/80 mb-6 max-w-md">
                 Making delivery simple, fast, and reliable for businesses and individuals across the city.
@@ -144,7 +144,7 @@ const Footer = () => {
         <div className="py-6 border-t border-background/20">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-background/80 text-sm">
-              © 2024 PosaTym. All rights reserved.
+              © 2024 PosTym. All rights reserved.
             </p>
             <p className="text-background/80 text-sm mt-2 md:mt-0">
               Built with ❤️ for better deliveries
