@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Truck, Network, Target, Zap } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const DistributorsPage = () => {
   return (
@@ -20,8 +21,8 @@ const DistributorsPage = () => {
             Bridge manufacturers and retailers with intelligent distribution solutions. 
             Maximize efficiency and minimize costs with our advanced logistics platform.
           </p>
-          <Button size="lg" className="mr-4">
-            Partner With Us
+          <Button size="lg" className="mr-4" asChild>
+            <Link to="/partner-with-us">Partner With Us</Link>
           </Button>
           <Button variant="outline" size="lg">
             View Platform Demo
