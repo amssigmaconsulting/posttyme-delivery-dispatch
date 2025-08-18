@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { ArrowRight, Shield, Clock, Users, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const GetStarted = () => {
   return (
@@ -123,9 +124,11 @@ const GetStarted = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button variant="hero" size="lg" className="min-w-48">
-                Create Free Account
-                <ArrowRight className="ml-2 h-5 w-5" />
+              <Button variant="hero" size="lg" className="min-w-48" asChild>
+                <Link to="/register">
+                  Create Free Account
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
               </Button>
               
               <Button variant="outline" size="lg" className="min-w-48">
