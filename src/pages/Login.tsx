@@ -46,9 +46,36 @@ const Login = () => {
       if (error) throw error;
 
       if (data.user) {
+        try {
+          // Ensure retailer profile exists (in case signup required email verification)
+          const { data: existingProfile, error: fetchErr } = await supabase
+            .from('retailer_profiles')
+            .select('id')
+            .eq('user_id', data.user.id)
+            .maybeSingle();
+
+          if (fetchErr) throw fetchErr;
+
+          if (!existingProfile) {
+            const pendingRaw = localStorage.getItem('pendingRetailerProfile');
+            if (pendingRaw) {
+              const pending = JSON.parse(pendingRaw);
+              const { error: insertErr } = await supabase.from('retailer_profiles').insert({
+                user_id: data.user.id,
+                ...pending,
+              });
+              if (insertErr) throw insertErr;
+              localStorage.removeItem('pendingRetailerProfile');
+            }
+          }
+        } catch (e) {
+          // Log but do not block login
+          console.error('Post-login retailer profile setup error:', e);
+        }
+
         toast({
-          title: "Welcome back!",
-          description: "You have been signed in successfully."
+          title: 'Welcome back!',
+          description: 'You have been signed in successfully.'
         });
         navigate('/');
       }

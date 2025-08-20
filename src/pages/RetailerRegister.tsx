@@ -79,10 +79,36 @@ const RetailerRegister = () => {
       if (authError) throw authError;
 
       if (authData.user) {
-        // Wait a moment for the session to be established
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        // Check if we have an authenticated session (email may require verification)
+        const { data: sessionData } = await supabase.auth.getSession();
+        const hasSession = Boolean(sessionData?.session);
 
-        // Create retailer profile
+        if (!hasSession) {
+          // Defer profile creation until after email verification and first sign-in
+          const pendingProfile = {
+            first_name: formData.firstName,
+            last_name: formData.lastName,
+            email: formData.email,
+            phone: formData.phone,
+            store_name: formData.storeName,
+            store_type: formData.storeType,
+            city: formData.city,
+            state: formData.state,
+            address: formData.address,
+            monthly_volume: formData.monthlyVolume,
+            product_categories: formData.productCategories,
+          };
+          try { localStorage.setItem('pendingRetailerProfile', JSON.stringify(pendingProfile)); } catch {}
+
+          toast({
+            title: 'Verify your email',
+            description: 'We sent you a verification link. After verifying, sign in and we\'ll complete your retailer profile automatically.',
+          });
+          navigate('/login');
+          return;
+        }
+
+        // We have a session, so we can create the profile now
         const { error: profileError } = await supabase
           .from('retailer_profiles')
           .insert({
@@ -97,7 +123,7 @@ const RetailerRegister = () => {
             state: formData.state,
             address: formData.address,
             monthly_volume: formData.monthlyVolume,
-            product_categories: formData.productCategories
+            product_categories: formData.productCategories,
           });
 
         if (profileError) {
@@ -106,8 +132,8 @@ const RetailerRegister = () => {
         }
 
         toast({
-          title: "Success!",
-          description: "Your retailer account has been created successfully. Please check your email to verify your account.",
+          title: 'Success!',
+          description: 'Your retailer account has been created successfully.',
         });
 
         navigate('/');
