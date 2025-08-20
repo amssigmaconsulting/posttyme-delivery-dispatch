@@ -101,8 +101,8 @@ const RetailerRegister = () => {
           try { localStorage.setItem('pendingRetailerProfile', JSON.stringify(pendingProfile)); } catch {}
 
           toast({
-            title: 'Verify your email',
-            description: 'We sent you a verification link. After verifying, sign in and we\'ll complete your retailer profile automatically.',
+            title: '📧 Check your email',
+            description: 'We\'ve sent a verification link to your email address. Please click the link to verify your account, then sign in to complete your retailer profile setup.',
           });
           navigate('/login');
           return;
