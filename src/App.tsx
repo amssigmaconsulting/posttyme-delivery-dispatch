@@ -15,6 +15,7 @@ import WatchDemo from "./pages/WatchDemo";
 import PartnerWithUs from "./pages/PartnerWithUs";
 import JoinNetwork from "./pages/JoinNetwork";
 import Register from "./pages/Register";
+import RetailerRegister from "./pages/RetailerRegister";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -38,6 +39,7 @@ const App = () => (
           <Route path="/partner-with-us" element={<PartnerWithUs />} />
           <Route path="/join-network" element={<JoinNetwork />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/retailer-register" element={<RetailerRegister />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

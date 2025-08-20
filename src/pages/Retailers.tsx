@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Store, TrendingUp, Package, Clock } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const RetailersPage = () => {
   return (
@@ -20,8 +21,8 @@ const RetailersPage = () => {
             Get consistent, timely deliveries from manufacturers and distributors. 
             Keep your shelves stocked with our efficient supply chain solutions.
           </p>
-          <Button size="lg" className="mr-4">
-            Get Started
+          <Button size="lg" className="mr-4" asChild>
+            <Link to="/retailer-register">Get Started</Link>
           </Button>
           <Button variant="outline" size="lg">
             Learn More
@@ -115,7 +116,9 @@ const RetailersPage = () => {
               <p className="text-muted-foreground mb-6">
                 Join thousands of retailers who trust PosTym for their supply needs.
               </p>
-              <Button>Start Your Free Trial</Button>
+              <Button asChild>
+                <Link to="/retailer-register">Start Your Free Trial</Link>
+              </Button>
             </div>
           </div>
         </div>
