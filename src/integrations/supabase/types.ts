@@ -14,6 +14,54 @@ export type Database = {
   }
   public: {
     Tables: {
+      affiliate_applications: {
+        Row: {
+          additional_info: string | null
+          audience: string | null
+          created_at: string
+          email: string
+          expected_referrals: string | null
+          experience: string | null
+          full_name: string
+          id: string
+          phone: string
+          referral_methods: string | null
+          status: string
+          updated_at: string
+          website: string | null
+        }
+        Insert: {
+          additional_info?: string | null
+          audience?: string | null
+          created_at?: string
+          email: string
+          expected_referrals?: string | null
+          experience?: string | null
+          full_name: string
+          id?: string
+          phone: string
+          referral_methods?: string | null
+          status?: string
+          updated_at?: string
+          website?: string | null
+        }
+        Update: {
+          additional_info?: string | null
+          audience?: string | null
+          created_at?: string
+          email?: string
+          expected_referrals?: string | null
+          experience?: string | null
+          full_name?: string
+          id?: string
+          phone?: string
+          referral_methods?: string | null
+          status?: string
+          updated_at?: string
+          website?: string | null
+        }
+        Relationships: []
+      }
       agent_profiles: {
         Row: {
           bio: string | null
@@ -559,6 +607,72 @@ export type Database = {
         }
         Relationships: []
       }
+      retailer_profiles: {
+        Row: {
+          address: string
+          city: string
+          created_at: string
+          email: string
+          first_name: string
+          id: string
+          is_verified: boolean
+          last_name: string
+          monthly_volume: string
+          phone: string | null
+          product_categories: string | null
+          state: string
+          store_name: string
+          store_type: string
+          updated_at: string
+          user_id: string
+          verification_notes: string | null
+          verified_at: string | null
+          verified_by: string | null
+        }
+        Insert: {
+          address: string
+          city: string
+          created_at?: string
+          email: string
+          first_name: string
+          id?: string
+          is_verified?: boolean
+          last_name: string
+          monthly_volume: string
+          phone?: string | null
+          product_categories?: string | null
+          state: string
+          store_name: string
+          store_type: string
+          updated_at?: string
+          user_id: string
+          verification_notes?: string | null
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Update: {
+          address?: string
+          city?: string
+          created_at?: string
+          email?: string
+          first_name?: string
+          id?: string
+          is_verified?: boolean
+          last_name?: string
+          monthly_volume?: string
+          phone?: string | null
+          product_categories?: string | null
+          state?: string
+          store_name?: string
+          store_type?: string
+          updated_at?: string
+          user_id?: string
+          verification_notes?: string | null
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -649,6 +763,10 @@ export type Database = {
         Returns: undefined
       }
       verify_dealer_profile: {
+        Args: { target_user_id: string; verification_notes_param?: string }
+        Returns: undefined
+      }
+      verify_retailer_profile: {
         Args: { target_user_id: string; verification_notes_param?: string }
         Returns: undefined
       }

@@ -7,9 +7,114 @@ import { Textarea } from "@/components/ui/textarea";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { ArrowRight, Store, Shield, TrendingUp, Clock } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const RetailerRegister = () => {
+  const navigate = useNavigate();
+  const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    storeName: "",
+    storeType: "",
+    city: "",
+    state: "",
+    address: "",
+    monthlyVolume: "",
+    productCategories: "",
+    password: "",
+    confirmPassword: ""
+  });
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (formData.password !== formData.confirmPassword) {
+      toast({
+        title: "Error",
+        description: "Passwords do not match",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (!formData.firstName || !formData.lastName || !formData.email || !formData.storeName || 
+        !formData.storeType || !formData.city || !formData.state || !formData.address || 
+        !formData.monthlyVolume || !formData.password) {
+      toast({
+        title: "Error",
+        description: "Please fill in all required fields",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      // Create user account
+      const { data: authData, error: authError } = await supabase.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+        options: {
+          emailRedirectTo: `${window.location.origin}/`,
+          data: {
+            user_type: 'retailer'
+          }
+        }
+      });
+
+      if (authError) throw authError;
+
+      if (authData.user) {
+        // Create retailer profile
+        const { error: profileError } = await supabase
+          .from('retailer_profiles')
+          .insert({
+            user_id: authData.user.id,
+            first_name: formData.firstName,
+            last_name: formData.lastName,
+            email: formData.email,
+            phone: formData.phone,
+            store_name: formData.storeName,
+            store_type: formData.storeType,
+            city: formData.city,
+            state: formData.state,
+            address: formData.address,
+            monthly_volume: formData.monthlyVolume,
+            product_categories: formData.productCategories
+          });
+
+        if (profileError) throw profileError;
+
+        toast({
+          title: "Success!",
+          description: "Your retailer account has been created successfully. Please check your email to verify your account.",
+        });
+
+        navigate('/');
+      }
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to create account. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-subtle">
       <Navigation />
@@ -84,105 +189,178 @@ const RetailerRegister = () => {
               </CardHeader>
               
               <CardContent className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="firstName">First Name</Label>
-                    <Input id="firstName" placeholder="Enter your first name" />
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="firstName">First Name</Label>
+                      <Input 
+                        id="firstName" 
+                        placeholder="Enter your first name"
+                        value={formData.firstName}
+                        onChange={(e) => handleInputChange('firstName', e.target.value)}
+                        required
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="lastName">Last Name</Label>
+                      <Input 
+                        id="lastName" 
+                        placeholder="Enter your last name"
+                        value={formData.lastName}
+                        onChange={(e) => handleInputChange('lastName', e.target.value)}
+                        required
+                      />
+                    </div>
                   </div>
+
                   <div className="space-y-2">
-                    <Label htmlFor="lastName">Last Name</Label>
-                    <Input id="lastName" placeholder="Enter your last name" />
+                    <Label htmlFor="email">Email Address</Label>
+                    <Input 
+                      id="email" 
+                      type="email" 
+                      placeholder="Enter your business email"
+                      value={formData.email}
+                      onChange={(e) => handleInputChange('email', e.target.value)}
+                      required
+                    />
                   </div>
-                </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email Address</Label>
-                  <Input id="email" type="email" placeholder="Enter your business email" />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="phone">Phone Number</Label>
-                  <Input id="phone" type="tel" placeholder="Enter your phone number" />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="storeName">Store Name</Label>
-                  <Input id="storeName" placeholder="Enter your store/business name" />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="storeType">Store Type</Label>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select your store type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="grocery">Grocery Store</SelectItem>
-                      <SelectItem value="convenience">Convenience Store</SelectItem>
-                      <SelectItem value="pharmacy">Pharmacy</SelectItem>
-                      <SelectItem value="electronics">Electronics Store</SelectItem>
-                      <SelectItem value="clothing">Clothing Store</SelectItem>
-                      <SelectItem value="department">Department Store</SelectItem>
-                      <SelectItem value="specialty">Specialty Store</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="city">City</Label>
-                    <Input id="city" placeholder="Enter your city" />
+                    <Label htmlFor="phone">Phone Number</Label>
+                    <Input 
+                      id="phone" 
+                      type="tel" 
+                      placeholder="Enter your phone number"
+                      value={formData.phone}
+                      onChange={(e) => handleInputChange('phone', e.target.value)}
+                    />
                   </div>
+
                   <div className="space-y-2">
-                    <Label htmlFor="state">State</Label>
-                    <Input id="state" placeholder="Enter your state" />
+                    <Label htmlFor="storeName">Store Name</Label>
+                    <Input 
+                      id="storeName" 
+                      placeholder="Enter your store/business name"
+                      value={formData.storeName}
+                      onChange={(e) => handleInputChange('storeName', e.target.value)}
+                      required
+                    />
                   </div>
-                </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="address">Store Address</Label>
-                  <Textarea id="address" placeholder="Enter your complete store address" />
-                </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="storeType">Store Type</Label>
+                    <Select value={formData.storeType} onValueChange={(value) => handleInputChange('storeType', value)}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select your store type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="grocery">Grocery Store</SelectItem>
+                        <SelectItem value="convenience">Convenience Store</SelectItem>
+                        <SelectItem value="pharmacy">Pharmacy</SelectItem>
+                        <SelectItem value="electronics">Electronics Store</SelectItem>
+                        <SelectItem value="clothing">Clothing Store</SelectItem>
+                        <SelectItem value="department">Department Store</SelectItem>
+                        <SelectItem value="specialty">Specialty Store</SelectItem>
+                        <SelectItem value="other">Other</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="monthlyVolume">Monthly Order Volume</Label>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select your monthly order volume" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="under-4m">Under ₦4,000,000</SelectItem>
-                      <SelectItem value="4m-20m">₦4,000,000 - ₦20,000,000</SelectItem>
-                      <SelectItem value="20m-40m">₦20,000,000 - ₦40,000,000</SelectItem>
-                      <SelectItem value="40m-200m">₦40,000,000 - ₦200,000,000</SelectItem>
-                      <SelectItem value="over-200m">Over ₦200,000,000</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="city">City</Label>
+                      <Input 
+                        id="city" 
+                        placeholder="Enter your city"
+                        value={formData.city}
+                        onChange={(e) => handleInputChange('city', e.target.value)}
+                        required
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="state">State</Label>
+                      <Input 
+                        id="state" 
+                        placeholder="Enter your state"
+                        value={formData.state}
+                        onChange={(e) => handleInputChange('state', e.target.value)}
+                        required
+                      />
+                    </div>
+                  </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="products">Product Categories of Interest</Label>
-                  <Textarea 
-                    id="products" 
-                    placeholder="List the main product categories you're interested in sourcing (e.g., electronics, food & beverages, clothing, etc.)"
-                  />
-                </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="address">Store Address</Label>
+                    <Textarea 
+                      id="address" 
+                      placeholder="Enter your complete store address"
+                      value={formData.address}
+                      onChange={(e) => handleInputChange('address', e.target.value)}
+                      required
+                    />
+                  </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="password">Create Password</Label>
-                  <Input id="password" type="password" placeholder="Create a secure password" />
-                </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="monthlyVolume">Monthly Order Volume</Label>
+                    <Select value={formData.monthlyVolume} onValueChange={(value) => handleInputChange('monthlyVolume', value)}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select your monthly order volume" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="under-4m">Under ₦4,000,000</SelectItem>
+                        <SelectItem value="4m-20m">₦4,000,000 - ₦20,000,000</SelectItem>
+                        <SelectItem value="20m-40m">₦20,000,000 - ₦40,000,000</SelectItem>
+                        <SelectItem value="40m-200m">₦40,000,000 - ₦200,000,000</SelectItem>
+                        <SelectItem value="over-200m">Over ₦200,000,000</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="confirmPassword">Confirm Password</Label>
-                  <Input id="confirmPassword" type="password" placeholder="Confirm your password" />
-                </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="products">Product Categories of Interest</Label>
+                    <Textarea 
+                      id="products" 
+                      placeholder="List the main product categories you're interested in sourcing (e.g., electronics, food & beverages, clothing, etc.)"
+                      value={formData.productCategories}
+                      onChange={(e) => handleInputChange('productCategories', e.target.value)}
+                    />
+                  </div>
 
-                <Button variant="hero" size="lg" className="w-full">
-                  Create Retailer Account
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
+                  <div className="space-y-2">
+                    <Label htmlFor="password">Create Password</Label>
+                    <Input 
+                      id="password" 
+                      type="password" 
+                      placeholder="Create a secure password"
+                      value={formData.password}
+                      onChange={(e) => handleInputChange('password', e.target.value)}
+                      required
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="confirmPassword">Confirm Password</Label>
+                    <Input 
+                      id="confirmPassword" 
+                      type="password" 
+                      placeholder="Confirm your password"
+                      value={formData.confirmPassword}
+                      onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
+                      required
+                    />
+                  </div>
+
+                  <Button 
+                    type="submit" 
+                    variant="hero" 
+                    size="lg" 
+                    className="w-full"
+                    disabled={isLoading}
+                  >
+                    {isLoading ? "Creating Account..." : "Create Retailer Account"}
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </form>
 
                 <div className="text-center text-sm text-muted-foreground">
                   Already have an account?{" "}
