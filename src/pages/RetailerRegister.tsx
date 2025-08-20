@@ -152,11 +152,11 @@ const RetailerRegister = () => {
                       <SelectValue placeholder="Select your monthly order volume" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="under-10k">Under $10,000</SelectItem>
-                      <SelectItem value="10k-50k">$10,000 - $50,000</SelectItem>
-                      <SelectItem value="50k-100k">$50,000 - $100,000</SelectItem>
-                      <SelectItem value="100k-500k">$100,000 - $500,000</SelectItem>
-                      <SelectItem value="over-500k">Over $500,000</SelectItem>
+                      <SelectItem value="under-4m">Under ₦4,000,000</SelectItem>
+                      <SelectItem value="4m-20m">₦4,000,000 - ₦20,000,000</SelectItem>
+                      <SelectItem value="20m-40m">₦20,000,000 - ₦40,000,000</SelectItem>
+                      <SelectItem value="40m-200m">₦40,000,000 - ₦200,000,000</SelectItem>
+                      <SelectItem value="over-200m">Over ₦200,000,000</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
