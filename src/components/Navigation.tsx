@@ -52,8 +52,8 @@ const Navigation = () => {
               <Button variant="ghost" size="sm">
                 Sign In
               </Button>
-              <Button variant="default" size="sm">
-                Get Started
+              <Button variant="default" size="sm" asChild>
+                <Link to="/register">Get Started</Link>
               </Button>
             </div>
           </div>
@@ -92,8 +92,8 @@ const Navigation = () => {
                 <Button variant="ghost" size="sm">
                   Sign In
                 </Button>
-                <Button variant="default" size="sm">
-                  Get Started
+                <Button variant="default" size="sm" asChild>
+                  <Link to="/register">Get Started</Link>
                 </Button>
               </div>
             </div>
