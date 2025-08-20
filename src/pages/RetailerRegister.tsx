@@ -69,7 +69,9 @@ const RetailerRegister = () => {
         options: {
           emailRedirectTo: `${window.location.origin}/`,
           data: {
-            user_type: 'retailer'
+            user_type: 'retailer',
+            first_name: formData.firstName,
+            last_name: formData.lastName
           }
         }
       });
@@ -77,6 +79,9 @@ const RetailerRegister = () => {
       if (authError) throw authError;
 
       if (authData.user) {
+        // Wait a moment for the session to be established
+        await new Promise(resolve => setTimeout(resolve, 1000));
+
         // Create retailer profile
         const { error: profileError } = await supabase
           .from('retailer_profiles')
@@ -95,7 +100,10 @@ const RetailerRegister = () => {
             product_categories: formData.productCategories
           });
 
-        if (profileError) throw profileError;
+        if (profileError) {
+          console.error('Profile creation error:', profileError);
+          throw profileError;
+        }
 
         toast({
           title: "Success!",
@@ -105,6 +113,7 @@ const RetailerRegister = () => {
         navigate('/');
       }
     } catch (error: any) {
+      console.error('Registration error:', error);
       toast({
         title: "Error",
         description: error.message || "Failed to create account. Please try again.",
