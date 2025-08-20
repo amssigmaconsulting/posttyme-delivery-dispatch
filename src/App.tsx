@@ -15,6 +15,7 @@ import WatchDemo from "./pages/WatchDemo";
 import PartnerWithUs from "./pages/PartnerWithUs";
 import JoinNetwork from "./pages/JoinNetwork";
 import Register from "./pages/Register";
+import Login from "./pages/Login";
 import RetailerRegister from "./pages/RetailerRegister";
 import NotFound from "./pages/NotFound";
 
@@ -39,6 +40,7 @@ const App = () => (
           <Route path="/partner-with-us" element={<PartnerWithUs />} />
           <Route path="/join-network" element={<JoinNetwork />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/retailer-register" element={<RetailerRegister />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
