@@ -100,6 +100,19 @@ const RetailerRegister = () => {
           };
           try { localStorage.setItem('pendingRetailerProfile', JSON.stringify(pendingProfile)); } catch {}
 
+          // Send custom verification welcome email
+          try {
+            await supabase.functions.invoke('send-verification-email', {
+              body: {
+                email: formData.email,
+                name: `${formData.firstName} ${formData.lastName}`,
+                userType: 'retailer'
+              }
+            });
+          } catch (error) {
+            console.error('Failed to send verification email:', error);
+          }
+
           toast({
             title: '📧 Check your email',
             description: 'We\'ve sent a verification link to your email address. Please click the link to verify your account, then sign in to complete your retailer profile setup.',
