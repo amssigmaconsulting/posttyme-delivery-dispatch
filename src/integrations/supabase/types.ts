@@ -223,6 +223,75 @@ export type Database = {
           },
         ]
       }
+      broker_profiles: {
+        Row: {
+          address: string | null
+          business_registration_number: string | null
+          business_type: string | null
+          company_name: string
+          contact_person: string
+          created_at: string
+          description: string | null
+          email: string
+          id: string
+          is_verified: boolean
+          operating_hours: Json | null
+          phone: string | null
+          profile_image_url: string | null
+          specialties: string[] | null
+          updated_at: string
+          user_id: string
+          verification_notes: string | null
+          verified_at: string | null
+          verified_by: string | null
+          website_url: string | null
+        }
+        Insert: {
+          address?: string | null
+          business_registration_number?: string | null
+          business_type?: string | null
+          company_name: string
+          contact_person: string
+          created_at?: string
+          description?: string | null
+          email: string
+          id?: string
+          is_verified?: boolean
+          operating_hours?: Json | null
+          phone?: string | null
+          profile_image_url?: string | null
+          specialties?: string[] | null
+          updated_at?: string
+          user_id: string
+          verification_notes?: string | null
+          verified_at?: string | null
+          verified_by?: string | null
+          website_url?: string | null
+        }
+        Update: {
+          address?: string | null
+          business_registration_number?: string | null
+          business_type?: string | null
+          company_name?: string
+          contact_person?: string
+          created_at?: string
+          description?: string | null
+          email?: string
+          id?: string
+          is_verified?: boolean
+          operating_hours?: Json | null
+          phone?: string | null
+          profile_image_url?: string | null
+          specialties?: string[] | null
+          updated_at?: string
+          user_id?: string
+          verification_notes?: string | null
+          verified_at?: string | null
+          verified_by?: string | null
+          website_url?: string | null
+        }
+        Relationships: []
+      }
       company_profiles: {
         Row: {
           address: string
@@ -349,75 +418,6 @@ export type Database = {
           id?: string
           updated_at?: string
           user_id?: string
-        }
-        Relationships: []
-      }
-      dealer_profiles: {
-        Row: {
-          address: string | null
-          business_registration_number: string | null
-          business_type: string | null
-          company_name: string
-          contact_person: string
-          created_at: string
-          description: string | null
-          email: string
-          id: string
-          is_verified: boolean
-          operating_hours: Json | null
-          phone: string | null
-          profile_image_url: string | null
-          specialties: string[] | null
-          updated_at: string
-          user_id: string
-          verification_notes: string | null
-          verified_at: string | null
-          verified_by: string | null
-          website_url: string | null
-        }
-        Insert: {
-          address?: string | null
-          business_registration_number?: string | null
-          business_type?: string | null
-          company_name: string
-          contact_person: string
-          created_at?: string
-          description?: string | null
-          email: string
-          id?: string
-          is_verified?: boolean
-          operating_hours?: Json | null
-          phone?: string | null
-          profile_image_url?: string | null
-          specialties?: string[] | null
-          updated_at?: string
-          user_id: string
-          verification_notes?: string | null
-          verified_at?: string | null
-          verified_by?: string | null
-          website_url?: string | null
-        }
-        Update: {
-          address?: string | null
-          business_registration_number?: string | null
-          business_type?: string | null
-          company_name?: string
-          contact_person?: string
-          created_at?: string
-          description?: string | null
-          email?: string
-          id?: string
-          is_verified?: boolean
-          operating_hours?: Json | null
-          phone?: string | null
-          profile_image_url?: string | null
-          specialties?: string[] | null
-          updated_at?: string
-          user_id?: string
-          verification_notes?: string | null
-          verified_at?: string | null
-          verified_by?: string | null
-          website_url?: string | null
         }
         Relationships: []
       }
@@ -699,7 +699,54 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      verified_agents_public: {
+        Row: {
+          bio: string | null
+          created_at: string | null
+          experience_years: number | null
+          id: string | null
+          is_verified: boolean | null
+          languages: string[] | null
+          location: string | null
+          name: string | null
+          profile_image_url: string | null
+          rating: number | null
+          specialties: string[] | null
+          total_reviews: number | null
+          user_id: string | null
+        }
+        Insert: {
+          bio?: string | null
+          created_at?: string | null
+          experience_years?: number | null
+          id?: string | null
+          is_verified?: boolean | null
+          languages?: string[] | null
+          location?: string | null
+          name?: string | null
+          profile_image_url?: string | null
+          rating?: number | null
+          specialties?: string[] | null
+          total_reviews?: number | null
+          user_id?: string | null
+        }
+        Update: {
+          bio?: string | null
+          created_at?: string | null
+          experience_years?: number | null
+          id?: string | null
+          is_verified?: boolean | null
+          languages?: string[] | null
+          location?: string | null
+          name?: string | null
+          profile_image_url?: string | null
+          rating?: number | null
+          specialties?: string[] | null
+          total_reviews?: number | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       get_agent_dashboard_analytics: {
@@ -758,11 +805,11 @@ export type Database = {
         Args: { target_user_id: string; verification_notes_param?: string }
         Returns: undefined
       }
-      verify_company_profile: {
+      verify_broker_profile: {
         Args: { target_user_id: string; verification_notes_param?: string }
         Returns: undefined
       }
-      verify_dealer_profile: {
+      verify_company_profile: {
         Args: { target_user_id: string; verification_notes_param?: string }
         Returns: undefined
       }
@@ -776,7 +823,7 @@ export type Database = {
       }
     }
     Enums: {
-      app_role: "admin" | "user" | "agent" | "dealer"
+      app_role: "admin" | "user" | "agent" | "broker"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -904,7 +951,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["admin", "user", "agent", "dealer"],
+      app_role: ["admin", "user", "agent", "broker"],
     },
   },
 } as const
