@@ -699,7 +699,54 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      verified_agents_public: {
+        Row: {
+          bio: string | null
+          created_at: string | null
+          experience_years: number | null
+          id: string | null
+          is_verified: boolean | null
+          languages: string[] | null
+          location: string | null
+          name: string | null
+          profile_image_url: string | null
+          rating: number | null
+          specialties: string[] | null
+          total_reviews: number | null
+          user_id: string | null
+        }
+        Insert: {
+          bio?: string | null
+          created_at?: string | null
+          experience_years?: number | null
+          id?: string | null
+          is_verified?: boolean | null
+          languages?: string[] | null
+          location?: string | null
+          name?: string | null
+          profile_image_url?: string | null
+          rating?: number | null
+          specialties?: string[] | null
+          total_reviews?: number | null
+          user_id?: string | null
+        }
+        Update: {
+          bio?: string | null
+          created_at?: string | null
+          experience_years?: number | null
+          id?: string | null
+          is_verified?: boolean | null
+          languages?: string[] | null
+          location?: string | null
+          name?: string | null
+          profile_image_url?: string | null
+          rating?: number | null
+          specialties?: string[] | null
+          total_reviews?: number | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       get_agent_dashboard_analytics: {
