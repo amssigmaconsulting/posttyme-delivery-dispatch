@@ -26,7 +26,7 @@ export type Database = {
           id: string
           phone: string
           referral_methods: string | null
-          status: string
+          status: string | null
           updated_at: string
           website: string | null
         }
@@ -41,7 +41,7 @@ export type Database = {
           id?: string
           phone: string
           referral_methods?: string | null
-          status?: string
+          status?: string | null
           updated_at?: string
           website?: string | null
         }
@@ -56,7 +56,7 @@ export type Database = {
           id?: string
           phone?: string
           referral_methods?: string | null
-          status?: string
+          status?: string | null
           updated_at?: string
           website?: string | null
         }
